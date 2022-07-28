@@ -1,21 +1,45 @@
 // useReducer: simple Counter
 // http://localhost:3000/isolated/exercise/01.js
 
+
+
 import * as React from 'react'
 
-function Counter({initialCount = 0, step = 1}) {
-  // 🐨 replace React.useState with React.useReducer.
-  // 💰 React.useReducer(countReducer, initialCount)
-  const [count, setCount] = React.useState(initialCount)
+//useReducer is very similar to useState. It usually preferable to use when we have complex state of logic
+//that the next state depends on the previous one
 
-  // 💰 you can write the countReducer function so you don't have to make any
-  // changes to the next two lines of code! Remember:
-  // The 1st argument is called "state" - the current value of count
-  // The 2nd argument is called "newState" - the value passed to setCount
-  const increment = () => setCount(count + step)
-  return <button onClick={increment}>{count}</button>
+function reducer(state,action){
+  // the first value is the state and action is what we pass inside the dispatch function.
+  console.log(action)
+
+  switch (action.type) {
+    case "increment":
+      return state + 1
+    case "decrement":
+      return state -1
+    case "double":
+      return state *2
+    default:
+      return state;
+  }
 }
-
+function sayMyName(){
+  return 'Gustavo Ferreira'
+}
+function Counter() {
+  // The first value it's the state and the second is the function that we'll call later. 
+  const [state,dispatch] = React.useReducer(reducer,0)
+  //Inside useReducer the first parameter is the reducer function and the second it's the initial state
+  // When the state when the state changes the component will be re-rendered 
+  return(
+  <>
+    <button onClick={()=>dispatch({type:'increment',name:sayMyName()})}>Increment</button>
+    <button onClick={()=>dispatch({type:'decrement'})}>Decrement</button>
+    <button onClick={()=>dispatch({type:'double'})}>Double</button>
+    <p>{state}</p>
+  </>
+  )
+}
 function App() {
   return <Counter />
 }

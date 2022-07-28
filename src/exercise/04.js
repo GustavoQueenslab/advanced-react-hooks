@@ -3,10 +3,14 @@
 
 import * as React from 'react'
 
+
+//useEffect and useLayoutEffect are 95% similar. We just will use useLayoutEffect
+// when we have to mutate the dom. The useLayoutEffect happens before the useEffect and this is the why
+// to use just in dom mutations
 function MessagesDisplay({messages}) {
   const containerRef = React.useRef()
   // 🐨 replace useEffect with useLayoutEffect
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     containerRef.current.scrollTop = containerRef.current.scrollHeight
   })
 
@@ -33,7 +37,7 @@ function SlooooowSibling() {
   // how it impacts interactivity of the page before updates.
   React.useEffect(() => {
     // increase this number to see a more stark difference
-    sleep(300)
+    sleep(2000)
   })
   return null
 }
